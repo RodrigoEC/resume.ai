@@ -20,6 +20,8 @@ data/
 parts/
 sdist/
 var/
+resume_ai
+.kiro
 wheels/
 share/python-wheels/
 *.egg-info/

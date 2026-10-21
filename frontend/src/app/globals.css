@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/*
+  Design tokens — source of truth is the Resume.ai spec ("Color pop: green" row).
+  Registered as Tailwind v4 theme variables so components use bg-paper / text-olive
+  / border-ink etc. instead of hard-coded hex. The design is a fixed light "paper"
+  theme, so there is deliberately NO dark-mode block.
+*/
+@theme {
+  --color-paper: #fdfcf8; /* page background */
+  --color-surface: #ffffff; /* cards, fields */
+  --color-ink: #1c1b18; /* text, outlines, button shadow */
+  --color-muted: #4a483f; /* helper text */
+  --color-sage: #a2c26e; /* primary buttons, highlighter, badges, chips */
+  --color-sage-tint: #f2f5ea; /* upload area, secondary fill */
+  --color-olive: #56702f; /* green text, STAR letters, icons */
+  --color-orange: #d9773a; /* small accents only */
+
+  --font-hand: var(--font-kalam);
+
+  /* Near-square corners with a hand-drawn feel */
+  --radius-sketch: 3px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-kalam), ui-sans-serif, system-ui, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+  Sage "highlighter swipe" behind page titles and the wordmark. A skewed
+  pseudo-element sits behind the text so the ink reads on top of the sage, the
+  way a real highlighter leaves the ink visible.
+*/
+.highlight {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+}
+.highlight::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -0.1em;
+  right: -0.1em;
+  bottom: 0.08em;
+  height: 0.62em;
+  background: var(--color-sage);
+  transform: rotate(-0.6deg);
+}
+
+/* Offset "sketch" shadow on primary buttons — hard ink shadow, no blur. */
+.sketch-shadow {
+  box-shadow: 3px 3px 0 0 var(--color-ink);
+}
+.sketch-shadow-sm {
+  box-shadow: 2px 2px 0 0 var(--color-ink);
+}
+
+/* Respect reduced-motion for any transitions we add. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
